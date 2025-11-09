@@ -14,6 +14,7 @@ import re
 import os
 import sys
 from io import StringIO
+from typing import Optional, Tuple
 
 # 기존 stock_screener.py의 함수 재사용
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -369,6 +370,94 @@ def fetch_us_stock_data(ticker):
     except Exception as e:
         print(f"❌ 미국 주식 데이터 수집 실패: {e}")
         return None
+
+
+def _select_yf_interval(minutes: int) -> Tuple[str, bool]:
+    supported = {
+        1: "1m",
+        2: "2m",
+        5: "5m",
+        15: "15m",
+        30: "30m",
+        60: "60m",
+        90: "90m",
+        120: "2h",
+    }
+    if minutes in supported:
+        return supported[minutes], False
+    return "1m", True
+
+
+def _download_intraday_yf(ticker: str, interval: str, period: str):
+    try:
+        df = yf.download(
+            tickers=ticker,
+            interval=interval,
+            period=period,
+            progress=False,
+            auto_adjust=False,
+        )
+        if df is None or df.empty:
+            return None
+        df = df.rename(
+            columns={
+                "Open": "open",
+                "High": "high",
+                "Low": "low",
+                "Close": "close",
+                "Volume": "volume",
+            }
+        )
+        df = df[["open", "high", "low", "close", "volume"]]
+        df.index = df.index.tz_localize(None)
+        return df
+    except Exception:
+        return None
+
+
+def fetch_intraday_data(code: str, timeframe_min: int = 5, lookback_minutes: int = 360) -> Optional[pd.DataFrame]:
+    """
+    분봉 데이터를 가져옵니다. (가능한 경우 yfinance 사용)
+
+    Returns:
+        DataFrame: datetime index, columns [open, high, low, close, volume]
+    """
+    if not YFINANCE_AVAILABLE:
+        return None
+    timeframe_min = max(1, int(timeframe_min))
+
+    interval, needs_resample = _select_yf_interval(timeframe_min)
+    period = "1d" if timeframe_min <= 30 else "5d"
+
+    tickers = []
+    if is_us_stock(code):
+        tickers.append(code)
+    else:
+        numeric_code = str(code).zfill(6)
+        tickers.extend([f"{numeric_code}.KS", f"{numeric_code}.KQ"])
+
+    df: Optional[pd.DataFrame] = None
+    for ticker in tickers:
+        df = _download_intraday_yf(ticker, interval, period)
+        if df is not None:
+            break
+
+    if df is None or df.empty:
+        return None
+
+    if needs_resample:
+        resampled = (
+            df.resample(f"{timeframe_min}T")
+            .agg({"open": "first", "high": "max", "low": "min", "close": "last", "volume": "sum"})
+            .dropna(subset=["open", "high", "low", "close"])
+        )
+        df = resampled
+
+    if lookback_minutes and lookback_minutes > 0 and not df.empty:
+        cutoff = df.index.max() - pd.Timedelta(minutes=lookback_minutes)
+        df = df[df.index >= cutoff]
+
+    return df
 
 
 def _fetch_investor_data_naver(code):
