@@ -8,6 +8,7 @@ Render 배포용 실시간 신호 감시 스크립트
 1. 지정한 종목들의 현재 시세와 수급 데이터를 조회
 2. 매수/손절/익절 조건 충족 여부 판단
 3. 조건 충족 시 텔레그램 알림 전송 (중복 방지 및 쿨다운 지원)
+4. 매 사이클마다 환경변수를 다시 읽어, Render 재배포 없이 설정 변경을 반영
 
 환경 변수
 ---------
@@ -21,13 +22,13 @@ ENTRY_TOLERANCE_PCT       : 매수 목표가 대비 허용 오차(%) 기본 1.0
 STOP_LOSS_TOLERANCE_PCT   : 손절 라인 초과 허용 폭(%) 기본 0
 TAKE_PROFIT_TOLERANCE_PCT : 익절 라인 허용 오차(%) 기본 0
 ALERT_STATE_PATH          : 알림 상태 저장 파일 경로. 기본 outputs/txt/alert_state.json
-RUN_ONCE                  : "1"이면 1회 실행 후 종료
+RUN_ONCE                  : "1"/"true" 등으로 설정하면 1회 실행 후 종료
 
 Render에서의 사용
 -----------------
 Start Command 예시:
     python signal_watcher.py
-또는 개발/테스트용으로:
+또는 개발/테스트용:
     RUN_ONCE=1 python signal_watcher.py
 """
 
@@ -36,11 +37,17 @@ import logging
 import os
 import sys
 import time
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 import requests
+
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    load_dotenv = None
 
 from data_fetcher import (
     fetch_investor_trading_data,
@@ -71,6 +78,24 @@ logger = logging.getLogger("signal_watcher")
 # --------------------------------------------------------------------------- #
 # 유틸
 # --------------------------------------------------------------------------- #
+
+def refresh_environment() -> None:
+    """로컬 실행 시 .env를 재로딩하고, Render에서는 무시."""
+    if load_dotenv is None:
+        return
+    env_path = BASE_DIR / ".env"
+    if env_path.exists():
+        load_dotenv(dotenv_path=env_path, override=True)
+    else:
+        load_dotenv(override=True)
+
+
+def resolve_path(path_str: str) -> Path:
+    path = Path(path_str)
+    if not path.is_absolute():
+        path = (BASE_DIR / path).resolve()
+    return path
+
 
 def parse_stock_codes(raw: Optional[str]) -> List[str]:
     if not raw:
@@ -152,6 +177,7 @@ def parse_timestamp(value: str) -> Optional[datetime]:
 class AlertState:
     def __init__(self, path: Path, cooldown_minutes: int):
         self.path = path
+        self.cooldown_minutes = cooldown_minutes
         self.cooldown = timedelta(minutes=cooldown_minutes)
         self.state: Dict[str, Dict[str, Dict[str, str]]] = {}
         self._load()
@@ -205,7 +231,7 @@ class AlertState:
 # 텔레그램 연동
 # --------------------------------------------------------------------------- #
 
-def send_telegram_message(token: str, chat_id: str, text: str) -> bool:
+def send_telegram_message(token: Optional[str], chat_id: Optional[str], text: str) -> bool:
     if not token or not chat_id:
         logger.info("텔레그램 토큰 또는 채팅 ID가 설정되지 않아 알림을 건너뜁니다.")
         return False
@@ -421,33 +447,74 @@ def evaluate_alerts(
 
 
 # --------------------------------------------------------------------------- #
-# 메인 루프
+# 런타임 설정 & 메인 루프
 # --------------------------------------------------------------------------- #
 
-def run_cycle(
-    codes: List[str],
-    positions: Dict[str, Dict[str, float]],
-    state: AlertState,
-    telegram_token: Optional[str],
-    telegram_chat_id: Optional[str],
-    entry_tolerance_pct: float,
-    stop_loss_tolerance_pct: float,
-    take_profit_tolerance_pct: float,
-) -> None:
-    if not codes:
+@dataclass
+class RuntimeConfig:
+    stock_codes: List[str]
+    positions: Dict[str, Dict[str, float]]
+    telegram_token: Optional[str]
+    telegram_chat_id: Optional[str]
+    check_interval: int
+    cooldown_minutes: int
+    entry_tolerance_pct: float
+    stop_loss_tolerance_pct: float
+    take_profit_tolerance_pct: float
+    state_path: Path
+    run_once: bool
+
+
+def load_runtime_config() -> RuntimeConfig:
+    refresh_environment()
+
+    stock_codes = parse_stock_codes(os.getenv("STOCK_CODES"))
+    positions = parse_positions(os.getenv("POSITIONS"))
+
+    telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
+    telegram_chat_id = os.getenv("TELEGRAM_CHAT_ID")
+
+    check_interval = max(30, int(os.getenv("CHECK_INTERVAL_SECONDS", "1800")))
+    cooldown_minutes = max(1, int(os.getenv("ALERT_COOLDOWN_MINUTES", "60")))
+    entry_tolerance_pct = float(os.getenv("ENTRY_TOLERANCE_PCT", "1.0"))
+    stop_loss_tolerance_pct = float(os.getenv("STOP_LOSS_TOLERANCE_PCT", "0.0"))
+    take_profit_tolerance_pct = float(os.getenv("TAKE_PROFIT_TOLERANCE_PCT", "0.0"))
+
+    state_path = resolve_path(os.getenv("ALERT_STATE_PATH", str(DEFAULT_STATE_PATH)))
+
+    run_once_raw = os.getenv("RUN_ONCE", "")
+    run_once = run_once_raw.lower() in {"1", "true", "yes"}
+
+    return RuntimeConfig(
+        stock_codes=stock_codes,
+        positions=positions,
+        telegram_token=telegram_token,
+        telegram_chat_id=telegram_chat_id,
+        check_interval=check_interval,
+        cooldown_minutes=cooldown_minutes,
+        entry_tolerance_pct=entry_tolerance_pct,
+        stop_loss_tolerance_pct=stop_loss_tolerance_pct,
+        take_profit_tolerance_pct=take_profit_tolerance_pct,
+        state_path=state_path,
+        run_once=run_once,
+    )
+
+
+def run_cycle(config: RuntimeConfig, state: AlertState) -> None:
+    if not config.stock_codes:
         logger.warning("감시할 종목(STOCK_CODES)이 설정되지 않았습니다.")
         return
 
-    for code in codes:
-        ctx = fetch_stock_context(code, positions)
+    for code in config.stock_codes:
+        ctx = fetch_stock_context(code, config.positions)
         if ctx is None:
             continue
 
         alerts = evaluate_alerts(
             ctx,
-            entry_tolerance_pct=entry_tolerance_pct,
-            stop_loss_tolerance_pct=stop_loss_tolerance_pct,
-            take_profit_tolerance_pct=take_profit_tolerance_pct,
+            entry_tolerance_pct=config.entry_tolerance_pct,
+            stop_loss_tolerance_pct=config.stop_loss_tolerance_pct,
+            take_profit_tolerance_pct=config.take_profit_tolerance_pct,
         )
 
         if not alerts:
@@ -460,7 +527,7 @@ def run_cycle(
                 continue
 
             logger.info("[%s][%s] 알림 전송 준비", code, alert_type)
-            sent = send_telegram_message(telegram_token, telegram_chat_id, message)
+            sent = send_telegram_message(config.telegram_token, config.telegram_chat_id, message)
             if sent:
                 state.mark_sent(code, alert_type, {"message_preview": message[:80]})
             else:
@@ -468,49 +535,27 @@ def run_cycle(
 
 
 def main() -> None:
-    stock_codes = parse_stock_codes(os.getenv("STOCK_CODES"))
-    positions = parse_positions(os.getenv("POSITIONS"))
-
-    telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
-    telegram_chat_id = os.getenv("TELEGRAM_CHAT_ID")
-
-    check_interval = int(os.getenv("CHECK_INTERVAL_SECONDS", "1800"))
-    cooldown_minutes = int(os.getenv("ALERT_COOLDOWN_MINUTES", "60"))
-    entry_tolerance_pct = float(os.getenv("ENTRY_TOLERANCE_PCT", "1.0"))
-    stop_loss_tolerance_pct = float(os.getenv("STOP_LOSS_TOLERANCE_PCT", "0.0"))
-    take_profit_tolerance_pct = float(os.getenv("TAKE_PROFIT_TOLERANCE_PCT", "0.0"))
-
-    state_path = Path(os.getenv("ALERT_STATE_PATH", str(DEFAULT_STATE_PATH)))
-    state = AlertState(state_path, cooldown_minutes=cooldown_minutes)
-
-    run_cycle(
-        codes=stock_codes,
-        positions=positions,
-        state=state,
-        telegram_token=telegram_token,
-        telegram_chat_id=telegram_chat_id,
-        entry_tolerance_pct=entry_tolerance_pct,
-        stop_loss_tolerance_pct=stop_loss_tolerance_pct,
-        take_profit_tolerance_pct=take_profit_tolerance_pct,
-    )
-
-    if os.getenv("RUN_ONCE") == "1":
-        logger.info("RUN_ONCE=1 설정으로 1회 실행 후 종료합니다.")
-        return
+    state: Optional[AlertState] = None
+    state_signature: Optional[Tuple[str, int]] = None
 
     while True:
-        logger.info("다음 감시까지 %s초 대기합니다.", check_interval)
-        time.sleep(max(check_interval, 60))
-        run_cycle(
-            codes=stock_codes,
-            positions=positions,
-            state=state,
-            telegram_token=telegram_token,
-            telegram_chat_id=telegram_chat_id,
-            entry_tolerance_pct=entry_tolerance_pct,
-            stop_loss_tolerance_pct=stop_loss_tolerance_pct,
-            take_profit_tolerance_pct=take_profit_tolerance_pct,
-        )
+        config = load_runtime_config()
+
+        desired_signature = (str(config.state_path), config.cooldown_minutes)
+        if state is None or state_signature != desired_signature:
+            logger.info("알림 상태 관리자 초기화 (path=%s, cooldown=%s분)", config.state_path, config.cooldown_minutes)
+            state = AlertState(config.state_path, cooldown_minutes=config.cooldown_minutes)
+            state_signature = desired_signature
+
+        run_cycle(config, state)
+
+        if config.run_once:
+            logger.info("RUN_ONCE 설정으로 1회 실행 후 종료합니다.")
+            break
+
+        sleep_seconds = max(config.check_interval, 30)
+        logger.info("다음 감시까지 %s초 대기합니다.", sleep_seconds)
+        time.sleep(sleep_seconds)
 
 
 if __name__ == "__main__":

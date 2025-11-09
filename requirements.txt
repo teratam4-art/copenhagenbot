@@ -4,4 +4,5 @@ beautifulsoup4>=4.11.0
 yfinance>=0.2.0
 numpy>=1.23.0
 lxml>=4.9.0
+python-dotenv>=1.0.0
 
