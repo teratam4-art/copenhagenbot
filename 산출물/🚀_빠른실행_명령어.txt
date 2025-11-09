@@ -1,0 +1,174 @@
+# 🚀 주식 스크리너 - 빠른 실행 명령어 모음
+# 복사해서 터미널에 바로 붙여넣기!
+
+================================================================================
+🔧 필수 준비 작업
+================================================================================
+
+# 카테고리 목록 업데이트 (최초 1회 또는 주기적으로)
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --update-categories
+
+================================================================================
+🇰🇷 한국 주식 - 업종별 스크리닝
+================================================================================
+
+# 화장품 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "화장품" --top-limit 30
+
+# 소프트웨어 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "소프트웨어" --top-limit 30
+
+# 기계 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "기계" --top-limit 30
+
+# 반도체와반도체장비 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "반도체와반도체장비" --top-limit 30
+
+# 자동차 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "자동차" --top-limit 30
+
+# 제약 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "제약" --top-limit 30
+
+# 은행 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "은행" --top-limit 30
+
+# IT서비스 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "IT서비스" --top-limit 30
+
+# 게임엔터테인먼트 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "게임엔터테인먼트" --top-limit 30
+
+# 전자제품 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "전자제품" --top-limit 30
+
+# 화학 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "화학" --top-limit 30
+
+# 철강 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "철강" --top-limit 30
+
+# 건설 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "건설" --top-limit 30
+
+# 부동산 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "부동산" --top-limit 30
+
+# 코스피 전체
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "코스피" --top-limit 50
+
+# 코스닥 전체
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "코스닥" --top-limit 50
+
+# 한국 TOP 50 자동
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --top-korea
+
+================================================================================
+🇺🇸 미국 주식 - 섹터별 스크리닝
+================================================================================
+
+# Information Technology 섹터
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Information Technology" --top-limit 30
+
+# Health Care 섹터
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Health Care" --top-limit 30
+
+# Financials 섹터
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Financials" --top-limit 30
+
+# Consumer Discretionary 섹터
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Consumer Discretionary" --top-limit 30
+
+# Communication Services 섹터
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Communication Services" --top-limit 30
+
+# Industrials 섹터
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Industrials" --top-limit 30
+
+# Energy 섹터
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Energy" --top-limit 30
+
+# Materials 섹터
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Materials" --top-limit 30
+
+# Real Estate 섹터
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Real Estate" --top-limit 30
+
+# Utilities 섹터
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Utilities" --top-limit 30
+
+# Consumer Staples 섹터
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Consumer Staples" --top-limit 30
+
+================================================================================
+🇺🇸 미국 주식 - 업종별 스크리닝
+================================================================================
+
+# Application Software 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Application Software" --top-limit 30
+
+# Semiconductors 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Semiconductors" --top-limit 30
+
+# Biotechnology 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Biotechnology" --top-limit 30
+
+# Aerospace & Defense 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Aerospace & Defense" --top-limit 30
+
+# Automobile Manufacturers 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Automobile Manufacturers" --top-limit 30
+
+# Internet Content & Information 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Internet Content & Information" --top-limit 30
+
+# Pharmaceuticals 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Pharmaceuticals" --top-limit 30
+
+# Banks 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Banks" --top-limit 30
+
+# S&P 500
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "S&P 500" --top-limit 50
+
+# NASDAQ 100
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "NASDAQ 100" --top-limit 50
+
+# 미국 TOP 50 자동
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --top-us
+
+================================================================================
+⚙️ 조건 조정 버전 (관대한 조건 - 더 많은 종목 발견)
+================================================================================
+
+# 한국 - 화장품 (관대한 조건)
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "화장품" --rsi-min 40 --rsi-max 70 --volume-min 0.5 --volume-max 3.0 --top-limit 30
+
+# 한국 - 소프트웨어 (관대한 조건)
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "소프트웨어" --rsi-min 40 --rsi-max 70 --volume-min 0.5 --volume-max 3.0 --top-limit 30
+
+# 미국 - IT 섹터 (관대한 조건)
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Information Technology" --rsi-min 40 --rsi-max 70 --volume-min 0.5 --volume-max 3.0 --top-limit 30
+
+# 미국 - 반도체 업종 (관대한 조건)
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Semiconductors" --rsi-min 40 --rsi-max 70 --volume-min 0.5 --volume-max 3.0 --top-limit 30
+
+================================================================================
+🎯 가장 많이 사용하는 명령어 TOP 5
+================================================================================
+
+# 1. 한국 - 화장품 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "화장품" --top-limit 30
+
+# 2. 한국 - 소프트웨어 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-korea "소프트웨어" --top-limit 30
+
+# 3. 미국 - IT 섹터
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Information Technology" --top-limit 30
+
+# 4. 미국 - 반도체 업종
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --category-us "Semiconductors" --top-limit 30
+
+# 5. 카테고리 업데이트
+cd /Users/sinhyein/Documents/주식투자_혜인 && python3 stock_screener.py --update-categories
+

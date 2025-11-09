@@ -1,0 +1,224 @@
+﻿market,category_id,category_name,type
+한국,0,코스피,시장
+한국,1,코스닥,시장
+한국,265,판매업체,업종
+한국,262,생명과학도구및서비스,업종
+한국,281,건강관리장비와용품,업종
+한국,286,생물공학,업종
+한국,338,사무용전자제품,업종
+한국,301,은행,업종
+한국,261,제약,업종
+한국,275,담배,업종
+한국,314,출판,업종
+한국,311,포장재,업종
+한국,268,식품,업종
+한국,309,음료,업종
+한국,318,종이와목재,업종
+한국,264,백화점과일반상점,업종
+한국,317,"호텔,레스토랑,레저",업종
+한국,296,운송인프라,업종
+한국,292,핸드셋,업종
+한국,310,광고,업종
+한국,324,상업서비스와공급품,업종
+한국,328,전문소매,업종
+한국,271,레저용장비와제품,업종
+한국,267,IT서비스,업종
+한국,316,건강관리업체및서비스,업종
+한국,329,도로와철도운송,업종
+한국,266,화장품,업종
+한국,302,식품과기본식료품소매,업종
+한국,287,소프트웨어,업종
+한국,269,디스플레이장비및부품,업종
+한국,327,디스플레이패널,업종
+한국,315,손해보험,업종
+한국,333,무선통신서비스,업종
+한국,274,"섬유,의류,신발,호화품",업종
+한국,272,화학,업종
+한국,282,전자장비와기기,업종
+한국,304,철강,업종
+한국,294,통신장비,업종
+한국,295,에너지장비및서비스,업종
+한국,283,전기제품,업종
+한국,323,해운사,업종
+한국,307,전자제품,업종
+한국,313,석유와가스,업종
+한국,337,카드,업종
+한국,263,게임엔터테인먼트,업종
+한국,325,전기유틸리티,업종
+한국,279,건설,업종
+한국,280,부동산,업종
+한국,290,교육서비스,업종
+한국,298,가정용기기와용품,업종
+한국,288,건강관리기술,업종
+한국,297,가정용품,업종
+한국,305,항공사,업종
+한국,330,생명보험,업종
+한국,312,가스유틸리티,업종
+한국,25,기타,업종
+한국,293,컴퓨터와주변기기,업종
+한국,277,창업투자,업종
+한국,303,가구,업종
+한국,285,방송과엔터테인먼트,업종
+한국,289,건축자재,업종
+한국,270,자동차부품,업종
+한국,306,전기장비,업종
+한국,334,무역회사와판매업체,업종
+한국,319,기타금융,업종
+한국,308,인터넷과카탈로그소매,업종
+한국,320,건축제품,업종
+한국,332,문구류,업종
+한국,336,다각화된통신서비스,업종
+한국,299,기계,업종
+한국,300,양방향미디어와서비스,업종
+한국,284,우주항공과국방,업종
+한국,276,복합기업,업종
+한국,339,다각화된소비자서비스,업종
+한국,331,복합유틸리티,업종
+한국,321,증권,업종
+한국,322,비철금속,업종
+한국,291,조선,업종
+한국,326,항공화물운송과물류,업종
+한국,273,자동차,업종
+한국,278,반도체와반도체장비,업종
+미국,sp500,S&P 500,지수
+미국,nasdaq100,NASDAQ 100,지수
+미국,gics_sector_0,Communication Services,섹터
+미국,gics_sector_1,Consumer Discretionary,섹터
+미국,gics_sector_2,Consumer Staples,섹터
+미국,gics_sector_3,Energy,섹터
+미국,gics_sector_4,Financials,섹터
+미국,gics_sector_5,Health Care,섹터
+미국,gics_sector_6,Industrials,섹터
+미국,gics_sector_7,Information Technology,섹터
+미국,gics_sector_8,Materials,섹터
+미국,gics_sector_9,Real Estate,섹터
+미국,gics_sector_10,Utilities,섹터
+미국,gics_industry_0,Advertising,업종
+미국,gics_industry_1,Aerospace & Defense,업종
+미국,gics_industry_2,Agricultural & Farm Machinery,업종
+미국,gics_industry_3,Agricultural Products & Services,업종
+미국,gics_industry_4,Air Freight & Logistics,업종
+미국,gics_industry_5,Apparel Retail,업종
+미국,gics_industry_6,"Apparel, Accessories & Luxury Goods",업종
+미국,gics_industry_7,Application Software,업종
+미국,gics_industry_8,Asset Management & Custody Banks,업종
+미국,gics_industry_9,Automobile Manufacturers,업종
+미국,gics_industry_10,Automotive Parts & Equipment,업종
+미국,gics_industry_11,Automotive Retail,업종
+미국,gics_industry_12,Biotechnology,업종
+미국,gics_industry_13,Brewers,업종
+미국,gics_industry_14,Broadcasting,업종
+미국,gics_industry_15,Broadline Retail,업종
+미국,gics_industry_16,Building Products,업종
+미국,gics_industry_17,Cable & Satellite,업종
+미국,gics_industry_18,Cargo Ground Transportation,업종
+미국,gics_industry_19,Casinos & Gaming,업종
+미국,gics_industry_20,Commodity Chemicals,업종
+미국,gics_industry_21,Communications Equipment,업종
+미국,gics_industry_22,Computer & Electronics Retail,업종
+미국,gics_industry_23,Construction & Engineering,업종
+미국,gics_industry_24,Construction Machinery & Heavy Transportation Equipment,업종
+미국,gics_industry_25,Construction Materials,업종
+미국,gics_industry_26,Consumer Electronics,업종
+미국,gics_industry_27,Consumer Finance,업종
+미국,gics_industry_28,Consumer Staples Merchandise Retail,업종
+미국,gics_industry_29,Copper,업종
+미국,gics_industry_30,Data Center REITs,업종
+미국,gics_industry_31,Data Processing & Outsourced Services,업종
+미국,gics_industry_32,Distillers & Vintners,업종
+미국,gics_industry_33,Distributors,업종
+미국,gics_industry_34,Diversified Banks,업종
+미국,gics_industry_35,Diversified Support Services,업종
+미국,gics_industry_36,Electric Utilities,업종
+미국,gics_industry_37,Electrical Components & Equipment,업종
+미국,gics_industry_38,Electronic Components,업종
+미국,gics_industry_39,Electronic Equipment & Instruments,업종
+미국,gics_industry_40,Electronic Manufacturing Services,업종
+미국,gics_industry_41,Environmental & Facilities Services,업종
+미국,gics_industry_42,Fertilizers & Agricultural Chemicals,업종
+미국,gics_industry_43,Financial Exchanges & Data,업종
+미국,gics_industry_44,Food Distributors,업종
+미국,gics_industry_45,Food Retail,업종
+미국,gics_industry_46,Footwear,업종
+미국,gics_industry_47,Gas Utilities,업종
+미국,gics_industry_48,Gold,업종
+미국,gics_industry_49,Health Care Distributors,업종
+미국,gics_industry_50,Health Care Equipment,업종
+미국,gics_industry_51,Health Care Facilities,업종
+미국,gics_industry_52,Health Care REITs,업종
+미국,gics_industry_53,Health Care Services,업종
+미국,gics_industry_54,Health Care Supplies,업종
+미국,gics_industry_55,Health Care Technology,업종
+미국,gics_industry_56,Heavy Electrical Equipment,업종
+미국,gics_industry_57,Home Furnishings,업종
+미국,gics_industry_58,Home Improvement Retail,업종
+미국,gics_industry_59,Homebuilding,업종
+미국,gics_industry_60,Homefurnishing Retail,업종
+미국,gics_industry_61,Hotel & Resort REITs,업종
+미국,gics_industry_62,"Hotels, Resorts & Cruise Lines",업종
+미국,gics_industry_63,Household Products,업종
+미국,gics_industry_64,Human Resource & Employment Services,업종
+미국,gics_industry_65,IT Consulting & Other Services,업종
+미국,gics_industry_66,Independent Power Producers & Energy Traders,업종
+미국,gics_industry_67,Industrial Conglomerates,업종
+미국,gics_industry_68,Industrial Gases,업종
+미국,gics_industry_69,Industrial Machinery & Supplies & Components,업종
+미국,gics_industry_70,Industrial REITs,업종
+미국,gics_industry_71,Insurance Brokers,업종
+미국,gics_industry_72,Integrated Oil & Gas,업종
+미국,gics_industry_73,Integrated Telecommunication Services,업종
+미국,gics_industry_74,Interactive Home Entertainment,업종
+미국,gics_industry_75,Interactive Media & Services,업종
+미국,gics_industry_76,Internet Services & Infrastructure,업종
+미국,gics_industry_77,Investment Banking & Brokerage,업종
+미국,gics_industry_78,Leisure Products,업종
+미국,gics_industry_79,Life & Health Insurance,업종
+미국,gics_industry_80,Life Sciences Tools & Services,업종
+미국,gics_industry_81,Managed Health Care,업종
+미국,gics_industry_82,"Metal, Glass & Plastic Containers",업종
+미국,gics_industry_83,Movies & Entertainment,업종
+미국,gics_industry_84,Multi-Family Residential REITs,업종
+미국,gics_industry_85,Multi-Sector Holdings,업종
+미국,gics_industry_86,Multi-Utilities,업종
+미국,gics_industry_87,Multi-line Insurance,업종
+미국,gics_industry_88,Office REITs,업종
+미국,gics_industry_89,Oil & Gas Equipment & Services,업종
+미국,gics_industry_90,Oil & Gas Exploration & Production,업종
+미국,gics_industry_91,Oil & Gas Refining & Marketing,업종
+미국,gics_industry_92,Oil & Gas Storage & Transportation,업종
+미국,gics_industry_93,Other Specialized REITs,업종
+미국,gics_industry_94,Other Specialty Retail,업종
+미국,gics_industry_95,Packaged Foods & Meats,업종
+미국,gics_industry_96,Paper & Plastic Packaging Products & Materials,업종
+미국,gics_industry_97,Passenger Airlines,업종
+미국,gics_industry_98,Passenger Ground Transportation,업종
+미국,gics_industry_99,Personal Care Products,업종
+미국,gics_industry_100,Pharmaceuticals,업종
+미국,gics_industry_101,Property & Casualty Insurance,업종
+미국,gics_industry_102,Publishing,업종
+미국,gics_industry_103,Rail Transportation,업종
+미국,gics_industry_104,Real Estate Services,업종
+미국,gics_industry_105,Regional Banks,업종
+미국,gics_industry_106,Reinsurance,업종
+미국,gics_industry_107,Research & Consulting Services,업종
+미국,gics_industry_108,Restaurants,업종
+미국,gics_industry_109,Retail REITs,업종
+미국,gics_industry_110,Self-Storage REITs,업종
+미국,gics_industry_111,Semiconductor Materials & Equipment,업종
+미국,gics_industry_112,Semiconductors,업종
+미국,gics_industry_113,Single-Family Residential REITs,업종
+미국,gics_industry_114,Soft Drinks & Non-alcoholic Beverages,업종
+미국,gics_industry_115,Specialized Consumer Services,업종
+미국,gics_industry_116,Specialty Chemicals,업종
+미국,gics_industry_117,Steel,업종
+미국,gics_industry_118,Systems Software,업종
+미국,gics_industry_119,TBD,업종
+미국,gics_industry_120,Technology Distributors,업종
+미국,gics_industry_121,"Technology Hardware, Storage & Peripherals",업종
+미국,gics_industry_122,Telecom Tower REITs,업종
+미국,gics_industry_123,Timber REITs,업종
+미국,gics_industry_124,Tobacco,업종
+미국,gics_industry_125,Trading Companies & Distributors,업종
+미국,gics_industry_126,Transaction & Payment Processing Services,업종
+미국,gics_industry_127,Water Utilities,업종
+미국,gics_industry_128,Wireless Telecommunication Services,업종
